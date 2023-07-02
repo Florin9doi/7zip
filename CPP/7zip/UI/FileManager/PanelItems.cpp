@@ -519,7 +519,11 @@ HRESULT CPanel::RefreshListCtrl(const CSelectedState &state)
     SetToRootFolder();
   }
   */
-  
+
+  UpdateNaviHistory();
+
+  _headerToolBar.EnableButton(kMoveBackwardID, IsBackwardAvailable());
+  _headerToolBar.EnableButton(kMoveForwardID, IsForwardAvailable());
   _headerToolBar.EnableButton(kParentFolderID, !IsRootFolder());
 
   {
