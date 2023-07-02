@@ -173,6 +173,7 @@ IDB_COPY2      BITMAP  "../../UI/FileManager/Copy2.bmp"
 IDB_MOVE2      BITMAP  "../../UI/FileManager/Move2.bmp"
 IDB_DELETE2    BITMAP  "../../UI/FileManager/Delete2.bmp"
 IDB_INFO2      BITMAP  "../../UI/FileManager/Info2.bmp"
+IDB_NAVIBAR    BITMAP  "../../UI/FileManager/Navibar.bmp"
 
 
 STRINGTABLE

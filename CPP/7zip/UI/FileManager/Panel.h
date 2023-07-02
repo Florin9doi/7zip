@@ -26,6 +26,7 @@
 
 #include "../../../Windows/Control/ComboBox.h"
 #include "../../../Windows/Control/Edit.h"
+#include "../../../Windows/Control/ImageList.h"
 #include "../../../Windows/Control/ListView.h"
 #include "../../../Windows/Control/ReBar.h"
 #include "../../../Windows/Control/Static.h"
@@ -49,7 +50,12 @@
 #define NON_CE_VAR(_v_) _v_
 #endif
 
-const int kParentFolderID = 100;
+enum
+{
+  kMoveBackwardID = 100,
+  kMoveForwardID,
+  kParentFolderID
+};
 
 const unsigned kParentIndex = (unsigned)(int)-1;
 const UInt32 kParentIndex_UInt32 = (UInt32)(Int32)kParentIndex;
@@ -390,6 +396,7 @@ private:
 public:
   NWindows::NControl::CReBar _headerReBar;
   NWindows::NControl::CToolBar _headerToolBar;
+  NWindows::NControl::CImageList _headerImageList;
   NWindows::NControl::
     #ifdef UNDER_CE
     CComboBox
@@ -480,6 +487,7 @@ public:
   bool _dontShowMode;
 
 
+  UString _lastFolderPrefix;
   UString _currentFolderPrefix;
   
   CObjectVector<CFolderLink> _parentFolders;
@@ -492,6 +500,15 @@ public:
   CMyComPtr<IArchiveGetRawProps> _folderRawProps;
   CMyComPtr<IFolderAltStreams> _folderAltStreams;
   CMyComPtr<IFolderOperations> _folderOperations;
+
+  CFolderHistory _backwardHistory;
+  CFolderHistory _forwardHistory;
+  bool _IsNaviTriggered;
+  bool IsBackwardAvailable() { return _backwardHistory.Size() > 0; }
+  bool IsForwardAvailable() { return _forwardHistory.Size() > 0; }
+  void MoveBackward();
+  void MoveForward();
+  void UpdateNaviHistory();
 
 
   // for drag and drop highliting
