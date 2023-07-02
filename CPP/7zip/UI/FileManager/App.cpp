@@ -1002,3 +1002,18 @@ void CFolderHistory::AddString(const UString &s)
   AddUniqueStringToHead(Strings, s);
   Normalize();
 }
+
+void CFolderHistory::Push(const UString &s)
+{
+  NSynchronization::CCriticalSectionLock lock(_criticalSection);
+  Strings.Insert(0, s);
+  Normalize();
+}
+
+const UString CFolderHistory::Pop()
+{
+  NSynchronization::CCriticalSectionLock lock(_criticalSection);
+  UString ret = Strings.Front();
+  Strings.Delete(0);
+  return ret;
+}

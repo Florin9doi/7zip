@@ -20,6 +20,13 @@
 #define IDB_DELETE2  155
 #define IDB_INFO2    156
 
+#define IDB_NAVIBAR  200
+
+#define NAVIBAR_BACK               0
+#define NAVIBAR_FORWARD            1
+#define NAVIBAR_UP                 2
+#define NAVIBAR_COUNT              3
+
 #define IDM_HASH_ALL             101
 #define IDM_CRC32                102
 #define IDM_CRC64                103
