@@ -831,6 +831,39 @@ void CPanel::OpenRootFolder()
   */
 }
 
+void CPanel::MoveBackward()
+{
+  if (_backwardHistory.Size() > 0)
+  {
+    _IsNaviTriggered = true;
+    _forwardHistory.Push(_currentFolderPrefix);
+    UString path = _backwardHistory.Pop();
+    BindToPathAndRefresh(path);
+  }
+}
+
+void CPanel::MoveForward()
+{
+  if (_forwardHistory.Size() > 0)
+  {
+    _IsNaviTriggered = true;
+    _backwardHistory.Push(_currentFolderPrefix);
+    UString path = _forwardHistory.Pop();
+    BindToPathAndRefresh(path);
+  }
+}
+
+void CPanel::UpdateNaviHistory()
+{
+  if (_lastFolderPrefix != _currentFolderPrefix && PanelCreated && !_IsNaviTriggered)
+  {
+    _backwardHistory.Push(_lastFolderPrefix);
+    _forwardHistory.RemoveAll();
+  }
+  _lastFolderPrefix = _currentFolderPrefix;
+  _IsNaviTriggered = false;
+}
+
 void CPanel::OpenDrivesFolder()
 {
   CloseOpenFolders();
