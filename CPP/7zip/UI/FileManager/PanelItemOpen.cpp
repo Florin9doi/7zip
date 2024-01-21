@@ -48,7 +48,7 @@ extern bool g_IsNT;
 
 #define kTempDirPrefix FTEXT("7zO")
 
-// #define SHOW_DEBUG_INFO
+//#define SHOW_DEBUG_INFO
 
 #ifdef SHOW_DEBUG_INFO
   #define DEBUG_PRINT(s) OutputDebugStringA(s);

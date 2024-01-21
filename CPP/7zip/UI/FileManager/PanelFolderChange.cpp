@@ -366,6 +366,7 @@ void CPanel::LoadFullPath()
   }
   if (_folder)
     _currentFolderPrefix += GetFolderPath(_folder);
+  //MessageBox_Error( L"LoadFullPath - _currentFolderPrefix : " + _currentFolderPrefix);
 }
 
 static int GetRealIconIndex(CFSTR path, DWORD attributes)
@@ -772,6 +773,7 @@ void CPanel::OpenParentFolder()
       }
     }
   }
+  //MessageBox_Error(focusedName);
     
   CSelectedState state;
   state.FocusedName = focusedName;
@@ -835,26 +837,39 @@ void CPanel::MoveBackward()
 {
   if (_backwardHistory.Size() > 0)
   {
+    // MessageBox_Error( L"Go To = " + _backwardHistory.Peek());
     _IsNaviTriggered = true;
     _forwardHistory.Push(_currentFolderPrefix);
     UString path = _backwardHistory.Pop();
     BindToPathAndRefresh(path);
   }
+  // else {
+  //   MessageBox_Error( L"BackwardHistory is empty");
+  // }
 }
 
 void CPanel::MoveForward()
 {
   if (_forwardHistory.Size() > 0)
   {
+    // MessageBox_Error( L"Go To = " + _forwardHistory.Peek());
     _IsNaviTriggered = true;
     _backwardHistory.Push(_currentFolderPrefix);
     UString path = _forwardHistory.Pop();
     BindToPathAndRefresh(path);
   }
+  // else {
+  //   MessageBox_Error( L"ForwardHistory is empty");
+  // }
 }
 
 void CPanel::UpdateNaviHistory()
 {
+  //MessageBox_Error(L"UpdateNaviHistory() / remove forwardHist / add to backHist /"
+  //  L"\n_lastFolderPrefix = " + _lastFolderPrefix
+  //  + L"\n_currentFolderPrefix = " + _currentFolderPrefix
+  //  + L"\n_IsNaviTriggered = " + (_IsNaviTriggered ? L"true" : L"false")
+  //);
   if (_lastFolderPrefix != _currentFolderPrefix && PanelCreated && !_IsNaviTriggered)
   {
     _backwardHistory.Push(_lastFolderPrefix);

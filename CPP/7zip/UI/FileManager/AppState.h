@@ -58,6 +58,11 @@ public:
     return Strings.Size();
   }
 
+  //const UString Peek()
+  //{
+  //  return Strings.Front();
+  //}
+
   void Push(const UString& s);
   const UString Pop();
   void AddString(const UString &s);
