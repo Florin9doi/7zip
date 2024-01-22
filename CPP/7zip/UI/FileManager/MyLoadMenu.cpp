@@ -420,7 +420,10 @@ void OnMenuActivating(HWND /* hWnd */, HMENU hMenu, int position)
         IDM_VIEW_ARANGE_NO_SORT,
         GetSortControlID(g_App.GetSortID()),
         MF_BYCOMMAND);
-    
+
+    menu.EnableItem(IDM_OPEN_BACK_FOLDER, !g_App.IsBackwardAvailable());
+    menu.EnableItem(IDM_OPEN_FORWARD_FOLDER, !g_App.IsForwardAvailable());
+
     menu.CheckItemByID(IDM_VIEW_TWO_PANELS, g_App.NumPanels == 2);
     menu.CheckItemByID(IDM_VIEW_FLAT_VIEW, g_App.GetFlatMode());
     menu.CheckItemByID(IDM_VIEW_ARCHIVE_TOOLBAR, g_App.ShowArchiveToolbar);
@@ -854,8 +857,11 @@ bool OnMenuCommand(HWND hWnd, unsigned id)
     case IDM_VIEW_ARANGE_BY_SIZE: g_App.SortItemsWithPropID(kpidSize); break;
     case IDM_VIEW_ARANGE_NO_SORT: g_App.SortItemsWithPropID(kpidNoProperty); break;
 
+    case IDM_OPEN_BACK_FOLDER:    g_App.MoveBackward(); break;
+    case IDM_OPEN_FORWARD_FOLDER: g_App.MoveForward(); break;
     case IDM_OPEN_ROOT_FOLDER:    g_App.OpenRootFolder(); break;
     case IDM_OPEN_PARENT_FOLDER:  g_App.OpenParentFolder(); break;
+
     case IDM_FOLDERS_HISTORY:     g_App.FoldersHistory(); break;
     case IDM_VIEW_FLAT_VIEW:      g_App.ChangeFlatMode(); break;
     case IDM_VIEW_REFRESH:        g_App.RefreshView(); break;
