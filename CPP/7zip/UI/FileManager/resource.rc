@@ -105,6 +105,12 @@ BEGIN
     MENUITEM "Size\tCtrl+F6",               IDM_VIEW_ARANGE_BY_SIZE
     MENUITEM "Unsorted\tCtrl+F7",           IDM_VIEW_ARANGE_NO_SORT
     MY_MENUITEM_SEPARATOR
+    // consider to create a dedicated "GoTo" menu... or remove
+    MENUITEM "Back",                        IDM_OPEN_BACK_FOLDER
+    MENUITEM "Forward",                     IDM_OPEN_FORWARD_FOLDER
+    MENUITEM "Up One Level\tBackspace",     IDM_OPEN_PARENT_FOLDER
+    MENUITEM "Open Root Folder\t\\",        IDM_OPEN_ROOT_FOLDER
+    MY_MENUITEM_SEPARATOR
     MENUITEM "Flat View",                   IDM_VIEW_FLAT_VIEW
     MENUITEM "&2 Panels\tF9",               IDM_VIEW_TWO_PANELS
 
@@ -121,8 +127,6 @@ BEGIN
       MENUITEM "Large Buttons",             IDM_VIEW_TOOLBARS_LARGE_BUTTONS
       MENUITEM "Show Buttons Text",         IDM_VIEW_TOOLBARS_SHOW_BUTTONS_TEXT
     END
-    MENUITEM "Open Root Folder\t\\",        IDM_OPEN_ROOT_FOLDER
-    MENUITEM "Up One Level\tBackspace",     IDM_OPEN_PARENT_FOLDER
     MENUITEM "Folders History...\tAlt+F12", IDM_FOLDERS_HISTORY
     MENUITEM "&Refresh\tCtrl+R",            IDM_VIEW_REFRESH
     MENUITEM "Auto Refresh",                IDM_VIEW_AUTO_REFRESH
