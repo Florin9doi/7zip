@@ -165,6 +165,10 @@ public:
 
   void SortItemsWithPropID(PROPID propID) { GetFocusedPanel().SortItemsWithPropID(propID); }
 
+  bool IsBackwardAvailable() { return GetFocusedPanel().IsBackwardAvailable(); }
+  bool IsForwardAvailable() { return GetFocusedPanel().IsForwardAvailable(); }
+  void MoveBackward() { GetFocusedPanel().MoveBackward(); }
+  void MoveForward() { GetFocusedPanel().MoveForward(); }
   void OpenRootFolder() { GetFocusedPanel().OpenDrivesFolder(); }
   void OpenParentFolder() { GetFocusedPanel().OpenParentFolder(); }
   void FoldersHistory() { GetFocusedPanel().FoldersHistory(); }
