@@ -542,6 +542,8 @@ void CPanel::OnNotifyActivateItems()
   bool shift = IsKeyDown(VK_SHIFT);
   if (!shift && alt && !ctrl)
     Properties();
+  else if (ctrl)
+    g_App.OnSetSubFolder(g_App.LastFocusedPanel);
   else
     OpenSelectedItems(!shift || alt || ctrl);
 }
