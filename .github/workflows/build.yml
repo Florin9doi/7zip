@@ -1,0 +1,87 @@
+name: Build action
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  Build-Windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - dev-cmd: amd64
+            platform: x64
+          - dev-cmd: amd64_x86
+            platform: x86
+          - dev-cmd: amd64_arm64
+            platform: arm64
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Configure Developer Command Prompt for ${{ matrix.platform }}
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.dev-cmd }}
+
+      - name: Build Windows-${{ matrix.platform }}
+        run: |
+          cd CPP\7zip
+          nmake PLATFORM=${{ matrix.platform }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 7z Windows-${{ matrix.platform }}
+          path: |
+            CPP\7zip\Bundles\Format7zF\${{ matrix.platform }}\7z.dll
+            CPP\7zip\UI\FileManager\${{ matrix.platform }}\7zFM.exe
+            CPP\7zip\UI\Console\${{ matrix.platform }}\7z.exe
+            CPP\7zip\UI\GUI\${{ matrix.platform }}\7zG.exe
+
+  Build-Linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build Ubuntu
+        run: |
+          cd CPP/7zip/
+          pushd Bundles/Alone
+            make -j -f ../../cmpl_gcc.mak
+          popd
+          pushd Bundles/Alone2
+            make -j -f ../../cmpl_gcc.mak
+          popd
+          pushd Bundles/Alone7z
+            make -j -f ../../cmpl_gcc.mak
+          popd
+          pushd Bundles/Format7zF
+            make -j -f ../../cmpl_gcc.mak
+          popd
+          pushd Bundles/LzmaCon
+            make -j -f ../../cmpl_gcc.mak
+          popd
+          pushd UI/Client7z
+            make -j -f ../../cmpl_gcc.mak
+          popd
+          pushd UI/Console
+            make -j -f ../../cmpl_gcc.mak
+          popd
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 7z Ubuntu
+          path: |
+            CPP/7zip/Bundles/Alone/b/g/7za
+            CPP/7zip/Bundles/Alone2/b/g/7zz
+            CPP/7zip/Bundles/Alone7z/b/g/7zr
+            CPP/7zip/Bundles/Format7zF/b/g/7z.so
+            CPP/7zip/Bundles/LzmaCon/b/g/lzma
+            CPP/7zip/UI/Client7z/b/g/7zcl
+            CPP/7zip/UI/Console/b/g/7z
