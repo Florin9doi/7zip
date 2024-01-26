@@ -1,0 +1,35 @@
+name: Rebase action
+on:
+  schedule:
+    - cron: "0 8 * * 6,0" # At 08:00 AM, only on Saturday and Sunday
+  workflow_dispatch:      # click the button on Github repo!
+
+jobs:
+  Rebase-job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout target repo
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.REBASE_TOKEN }}
+
+    - name: Sync upstream changes
+      uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
+      with:
+        target_sync_branch: master
+        upstream_sync_branch: main
+        upstream_sync_repo: ip7z/7zip
+        git_config_pull_rebase: true
+        target_branch_push_args: "--force"
+
+    - name: New commits found
+      if: steps.sync.outputs.has_new_commits == 'true'
+      run: echo "New commits were found to sync."
+
+    - name: No new commits
+      if: steps.sync.outputs.has_new_commits == 'false'
+      run: echo "There were no new commits."
+
+    - name: Show value of 'has_new_commits'
+      run: echo ${{ steps.sync.outputs.has_new_commits }}
