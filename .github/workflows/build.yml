@@ -15,20 +15,14 @@ jobs:
             platform: x64
           - dev-cmd: amd64_x86
             platform: x86
-          - dev-cmd: amd64_arm64
-            platform: arm64
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Configure Developer Command Prompt for ${{ matrix.platform }}
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: ${{ matrix.dev-cmd }}
-
       - name: Build Windows-${{ matrix.platform }}
         run: |
+          & 'C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\Tools\Launch-VsDevShell.ps1' -Arch ${{ matrix.platform }}
           cd CPP\7zip
           nmake PLATFORM=${{ matrix.platform }}
 
